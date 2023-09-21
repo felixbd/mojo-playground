@@ -1,0 +1,52 @@
+# -*- mode: python; -*- naja fast... xD
+
+"""
+touch mojo files with emoji file ending - (c) 2023 Felix Drees - WTFPL
+Do What the Fuck You Want to Public License.
+"""
+
+from python import Python
+
+
+fn create_mojo_file(file_name: PythonObject, py: PythonObject) -> None:
+    """
+    Create mojo file with given file name
+    :param file_name: the given name of the file
+    :param py: the buildin python modules
+    :return: None.
+    """
+    try:
+        let mojo_file_name: PythonObject = file_name + py.str(".🔥")
+
+        let mojo_file = py.open(mojo_file_name, 'w')
+        _ = mojo_file.close()
+        print("Created: ")
+        print(mojo_file_name)
+
+    except Exception:
+        print("Error creating file")
+
+
+
+fn main() -> None:
+    """ Main func for mojo touch."""
+    try:
+        while True:
+            let py = Python.import_module("builtins")
+
+            let user_in: PythonObject = py.input("file name: ")
+            create_mojo_file(user_in^, py)
+
+            # FIXME: if not py.str('c') in py.list(py.input("continue / quit [c/Q]").lower()):
+            #    break
+
+            var temp = py.list(py.input("continue / quit [c/Q]").lower())
+            var flag: Bool = False
+            for e in temp:
+                if py.str('c') == py.str(e):
+                    flag = True
+            if not flag:
+                break
+
+    except Exception:
+        print("error")
