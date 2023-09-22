@@ -18,7 +18,7 @@ fn create_mojo_file(file_name: PythonObject, py: PythonObject) -> None:
     try:
         let mojo_file_name: PythonObject = file_name + py.str(".🔥")
 
-        let mojo_file = py.open(mojo_file_name, 'w')
+        let mojo_file = py.open(mojo_file_name, "w")
         _ = mojo_file.close()
         print("Created: ")
         print(mojo_file_name)
@@ -27,26 +27,37 @@ fn create_mojo_file(file_name: PythonObject, py: PythonObject) -> None:
         print("Error creating file")
 
 
-
 fn main() -> None:
-    """ Main func for mojo touch."""
+    """Main func for mojo touch."""
     try:
         while True:
             let py = Python.import_module("builtins")
 
             let user_in: PythonObject = py.input("file name: ")
-            create_mojo_file(user_in^, py)
+            create_mojo_file(user_in ^, py)
 
-            # FIXME: if not py.str('c') in py.list(py.input("continue / quit [c/Q]").lower()):
-            #    break
-
-            var temp = py.list(py.input("continue / quit [c/Q]").lower())
-            var flag: Bool = False
-            for e in temp:
-                if py.str('c') == py.str(e):
-                    flag = True
-            if not flag:
+            # FIXME: no support for the `in' operator which calls `__contains__`
+            #        and no suport for `if ... not in ...`
+            #  if 'c' not in py.input("continue / quit [c/Q]").lower():
+            if not py.input("continue / quit [c/Q]").lower().__contains__("c"):
                 break
+
+            # FIXME: no support for List Comprehension
+            #  expected ')' in call argument list
+            #  or expected ']' in list expression
+            # --------------------------------------------
+            # if not any(
+            #     "c" != e for e in py.list(py.input("continue / quit [c/Q]").lower())
+            # ):
+            #     break
+
+            # var temp = py.list(py.input("continue / quit [c/Q]").lower())
+            # var flag: Bool = False
+            # for e in temp:
+            #    if py.str("c") == py.str(e):
+            #        flag = True
+            # if not flag:
+            #    break
 
     except Exception:
         print("error")
