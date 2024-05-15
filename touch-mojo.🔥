@@ -16,9 +16,9 @@ fn create_mojo_file(file_name: PythonObject, py: PythonObject) -> None:
     :return: None.
     """
     try:
-        let mojo_file_name: PythonObject = file_name + py.str(".🔥")
+        var mojo_file_name: PythonObject = file_name + py.str(".🔥")
 
-        let mojo_file = py.open(mojo_file_name, "w")
+        var mojo_file = py.open(mojo_file_name, "w")
         _ = mojo_file.close()
         print("Created: ")
         print(mojo_file_name)
@@ -28,12 +28,14 @@ fn create_mojo_file(file_name: PythonObject, py: PythonObject) -> None:
 
 
 fn main() -> None:
-    """Main func for mojo touch."""
+    """
+    Main func for mojo touch.
+    """
     try:
         while True:
-            let py = Python.import_module("builtins")
+            var py = Python.import_module("builtins")
 
-            let user_in: PythonObject = py.input("file name: ")
+            var user_in: PythonObject = py.input("file name: ")
             create_mojo_file(user_in ^, py)
 
             # FIXME: no support for the `in' operator which calls `__contains__`
@@ -46,8 +48,8 @@ fn main() -> None:
             #  expected ')' in call argument list
             #  or expected ']' in list expression
             # --------------------------------------------
-            # if not any(
-            #     "c" != e for e in py.list(py.input("continue / quit [c/Q]").lower())
+            # if any(
+            #     "c" == e for e in py.list(py.input("continue / quit [c/Q]").lower())
             # ):
             #     break
 
